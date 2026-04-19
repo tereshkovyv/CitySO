@@ -1,0 +1,51 @@
+<Window x:Class="CitySO.UI.Views.ChangeStatusWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Изменить статус" Height="350" Width="500"
+        WindowStartupLocation="CenterOwner"
+        Background="#0F172A">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Status Display -->
+        <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding CurrentStatusName}" Foreground="#60A5FA" FontSize="28" FontWeight="Bold" TextAlignment="Center" Margin="0,0,0,8"/>
+            <TextBlock Text="{Binding CurrentStatusDescription}" Foreground="#94A3B8" FontSize="14" TextAlignment="Center" TextWrapping="Wrap"/>
+        </StackPanel>
+
+        <!-- Slider -->
+        <StackPanel Grid.Row="1" Margin="0,16,0,16">
+            <Slider Minimum="0" Maximum="3" Value="{Binding SelectedStatus, Mode=TwoWay}" 
+                    Background="#1E293B" Foreground="#34D399" Height="8" 
+                    IsSnapToTickEnabled="True" TickFrequency="1" TickPlacement="BottomRight"/>
+            
+            <!-- Status Labels -->
+            <Grid Margin="0,8,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Подготовка" Foreground="#94A3B8" FontSize="11" TextAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="Готово" Foreground="#94A3B8" FontSize="11" TextAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="В процессе" Foreground="#94A3B8" FontSize="11" TextAlignment="Center"/>
+                <TextBlock Grid.Column="3" Text="Завершено" Foreground="#94A3B8" FontSize="11" TextAlignment="Center"/>
+            </Grid>
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="OK" Command="{Binding SaveChangesCommand}" Background="#34D399" Foreground="#0F172A" Padding="12,6" FontSize="13" BorderThickness="0" Width="80" Height="38" Margin="0,0,8,0"/>
+            <Button Content="Отмена" Command="{Binding DiscardChangesCommand}" Background="#EF4444" Foreground="#F1F5F9" Padding="12,6" FontSize="13" BorderThickness="0" Width="80" Height="38"/>
+        </StackPanel>
+    </Grid>
+</Window>

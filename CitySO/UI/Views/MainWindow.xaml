@@ -1,0 +1,217 @@
+﻿<Window x:Class="CitySO.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CitySO"
+        xmlns:converters="clr-namespace:CitySO.UI.Converters"
+        mc:Ignorable="d"
+        Title="CitySO" Height="760" Width="500"
+        ResizeMode="NoResize"
+        Background="#0F172A"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:BoolToConnectStatusConverter x:Key="BoolToConnectStatusConverter"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Menu -->
+        <Menu Grid.Row="0" Background="#1E293B" Foreground="#F1F5F9" BorderThickness="0,0,0,1" BorderBrush="#334155">
+            <MenuItem Header="Файл" Background="#1E293B" Foreground="#F1F5F9">
+                <MenuItem Header="Импорт конфигурации" Command="{Binding ImportConfigCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+                <MenuItem Header="Экспорт конфигурации" Command="{Binding ExportConfigCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+                <Separator Background="#334155" Margin="0,4"/>
+                <MenuItem Header="Выход" Command="{Binding ExitCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+            </MenuItem>
+            <MenuItem Header="Соревнование" Background="#1E293B" Foreground="#F1F5F9">
+                <MenuItem Header="Добавить категорию" Command="{Binding AddCategoryCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+                <MenuItem Header="Изменить статус" Command="{Binding ChangeStatusCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+            </MenuItem>
+            <MenuItem Header="Сервисы" Background="#1E293B" Foreground="#F1F5F9">
+                <MenuItem Header="Скачать логи" Command="{Binding DownloadLogsCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+            </MenuItem>
+            <MenuItem Header="Настройки" Background="#1E293B" Foreground="#F1F5F9">
+                <MenuItem Header="Подключение к гугл таблицам" Command="{Binding OpenSettingsCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+                <MenuItem Header="Общие настройки" Command="{Binding OpenGeneralSettingsCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+                <MenuItem Header="Сбросить настройки" Command="{Binding ResetGeneralOptionsCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+            </MenuItem>
+            <MenuItem Header="О программе" Command="{Binding AboutCommand}" Background="#1E293B" Foreground="#F1F5F9"/>
+        </Menu>
+
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="16">
+                
+                <!-- Block 1: Competition Information -->
+                <Border BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Background="#1E293B" Padding="16" Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Информация о соревновании" FontSize="16" FontWeight="Bold" Foreground="#60A5FA" Margin="0,0,0,12"/>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,0,8">
+                                <TextBlock Text="Название:" Foreground="#94A3B8" FontSize="12"/>
+                                <TextBlock Text="{Binding CompetitionName}" Foreground="#F1F5F9" FontSize="14" FontWeight="SemiBold"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Margin="0,0,0,8">
+                                <TextBlock Text="Статус:" Foreground="#94A3B8" FontSize="12"/>
+                                <TextBlock Text="{Binding CompetitionStatus}" Foreground="#F1F5F9" FontSize="14" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- Block 2: Connection Information -->
+                <Border BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Background="#1E293B" Padding="16" Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Статус подключений" FontSize="16" FontWeight="Bold" Foreground="#60A5FA"/>
+                            <Button Grid.Column="1" Content="↻" Command="{Binding RefreshConnectionsCommand}" Background="#06B6D4" Foreground="#F1F5F9" Padding="8,4" FontSize="14" Width="32" Height="32"/>
+                        </Grid>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <!-- VK Connection -->
+                            <StackPanel Grid.Column="0" Margin="0,0,0,8">
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Ellipse Grid.Column="0" Width="12" Height="12" Fill="{Binding IsVkConnected, Converter={StaticResource BoolToConnectStatusConverter}}"/>
+                                    <TextBlock Grid.Column="1" Margin="8,0,0,0" Text="ВКонтакте" Foreground="#F1F5F9" FontSize="13"/>
+                                </Grid>
+                                <TextBlock Text="{Binding VkConnectionStatus}" ToolTip="{Binding VkConnectionStatus}" Foreground="#94A3B8" FontSize="11"/>
+                            </StackPanel>
+                            
+                            <!-- Google Connection -->
+                            <StackPanel Grid.Column="1" Margin="0,0,0,8">
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Ellipse Grid.Column="0" Width="12" Height="12" Fill="{Binding IsGoogleConnected, Converter={StaticResource BoolToConnectStatusConverter}}"/>
+                                    <TextBlock Grid.Column="1" Margin="8,0,0,0" Text="Google Sheets" Foreground="#F1F5F9" FontSize="13"/>
+                                </Grid>
+                                <TextBlock Text="{Binding GoogleConnectionStatus}" ToolTip="{Binding GoogleConnectionStatus}" Foreground="#94A3B8" FontSize="11"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- Block 3: Bot Management -->
+                <Border BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Background="#1E293B" Padding="16" Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Управление ботом" FontSize="16" FontWeight="Bold" Foreground="#60A5FA"/>
+                            <CheckBox Grid.Column="1" IsChecked="{Binding IsBotEnabled}" Foreground="#F1F5F9" VerticalAlignment="Center" Width="20" Height="20" Margin="0,0,8,0"/>
+                            <Button Grid.Column="2" Content="↻" Command="{Binding RefreshBotStatusCommand}" Background="#06B6D4" Foreground="#F1F5F9" Padding="8,4" FontSize="14" Width="32" Height="32"/>
+                        </Grid>
+                        
+                        <Grid Grid.Row="1" Margin="0,12,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Margin="0,0,0,8">
+                                <TextBlock Text="Обработано сообщений:" Foreground="#94A3B8" FontSize="12" Margin="0,0,0,8"/>
+                                <TextBlock Text="{Binding ProcessedMessages}" Foreground="#10B981" FontSize="18" FontWeight="Bold"/>
+                            </StackPanel>
+                            <Grid Grid.Column="1" Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0" Margin="0,0,0,8">
+                                    <TextBlock Text="Сообщений в очереди:" Foreground="#94A3B8" FontSize="12" Margin="0,0,0,8"/>
+                                    <TextBlock Text="{Binding QueuedMessages}" Foreground="#F59E0B" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                                <Button Grid.Column="1" Content="Разобрать" Command="{Binding ProcessQueueCommand}" Margin="8,0,0,0" Background="#6366F1" Foreground="#F1F5F9" Padding="8,4" FontSize="11" VerticalAlignment="Bottom"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- Block 4: Categories -->
+                <Border BorderBrush="#334155" BorderThickness="1" CornerRadius="8" Background="#1E293B" Padding="16" MinHeight="150" Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="Категории" FontSize="16" FontWeight="Bold" Foreground="#60A5FA"/>
+                            <Button Grid.Column="1" Content="↻" Command="{Binding RefreshCategoriesCommand}" Background="#06B6D4" Foreground="#F1F5F9" Padding="8,4" FontSize="14" Width="32" Height="32"/>
+                        </Grid>
+                        
+                        <!-- Categories DataGrid -->
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding Categories}" Margin="0,12,0,0"
+                                  Height="120"
+                                  Background="#0F172A" Foreground="#F1F5F9" 
+                                  HeadersVisibility="Column" RowBackground="#1E293B" 
+                                  RowHeight="32" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"
+                                  GridLinesVisibility="None" AutoGenerateColumns="False"
+                                  AlternatingRowBackground="#162238" BorderBrush="#334155"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Background" Value="#334155"/>
+                                    <Setter Property="Foreground" Value="#60A5FA"/>
+                                    <Setter Property="Padding" Value="8"/>
+                                    <Setter Property="BorderBrush" Value="#1E293B"/>
+                                </Style>
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Padding" Value="8"/>
+                                    <Setter Property="BorderBrush" Value="#1E293B"/>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Категория" Binding="{Binding Name}" Width="*"/>
+                                <DataGridTextColumn Header="Заданий" Binding="{Binding TasksCount}" Width="100"/>
+                                <DataGridTextColumn Header="Участников" Binding="{Binding ParticipantsCount}" Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

@@ -1,0 +1,47 @@
+<Window x:Class="CitySO.UI.Views.GeneralSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Общие настройки" Height="420" Width="500"
+        WindowStartupLocation="CenterOwner"
+        Background="#0F172A">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Название соревнования" Foreground="#94A3B8" FontSize="12" Margin="0,0,0,8"/>
+        <TextBox Grid.Row="1" Text="{Binding CompetitionName, UpdateSourceTrigger=PropertyChanged}"
+                 Background="#1E293B" Foreground="#F1F5F9" BorderBrush="#334155" BorderThickness="1" Padding="10" Margin="0,0,0,16"/>
+
+        <TextBlock Grid.Row="2" Text="API-ключ ВКонтакте" Foreground="#94A3B8" FontSize="12" Margin="0,0,0,8"/>
+        <TextBox Grid.Row="3" Text="{Binding VkApiKey, UpdateSourceTrigger=PropertyChanged}"
+                 Background="#1E293B" Foreground="#F1F5F9" BorderBrush="#334155" BorderThickness="1" Padding="10" Margin="0,0,0,16"/>
+
+        <TextBlock Grid.Row="4" Text="ID сообщества ВКонтакте" Foreground="#94A3B8" FontSize="12" Margin="0,0,0,8"/>
+        <TextBox Grid.Row="5" Text="{Binding VkGroupId, UpdateSourceTrigger=PropertyChanged}"
+                 Background="#1E293B" Foreground="#F1F5F9" BorderBrush="#334155" BorderThickness="1" Padding="10" Margin="0,0,0,16"/>
+
+        <TextBlock Grid.Row="6" Text="Ссылка на Google Таблицу" Foreground="#94A3B8" FontSize="12" Margin="0,0,0,8"/>
+        <TextBox Grid.Row="7" Text="{Binding GoogleSpreadSheetId, UpdateSourceTrigger=PropertyChanged}"
+                 Background="#1E293B" Foreground="#F1F5F9" BorderBrush="#334155" BorderThickness="1" Padding="10" Margin="0,0,0,16"/>
+
+        <CheckBox Grid.Row="8" Content="Показывать результат ответов сразу" IsChecked="{Binding ShowAnswersImmediately}" 
+                  Foreground="#F1F5F9" FontSize="12" Margin="0,0,0,16"/>
+
+        <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+            <Button Content="OK" Command="{Binding SaveChangesCommand}" Background="#34D399" Foreground="#0F172A" Padding="12,6" FontSize="13" BorderThickness="0" Width="80" Height="38" Margin="0,0,8,0"/>
+            <Button Content="Отмена" Command="{Binding DiscardChangesCommand}" Background="#EF4444" Foreground="#F1F5F9" Padding="12,6" FontSize="13" BorderThickness="0" Width="80" Height="38"/>
+        </StackPanel>
+    </Grid>
+</Window>
