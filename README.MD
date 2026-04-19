@@ -2,6 +2,18 @@
 
 Приложение CitySO — это приложение под Windows для управления квестами. Прием ответов осуществляется через VkApi. В качестве базы данных используются гугл-таблицы, что дает возможность постоянного контроля и мониторинга. 
 
+
+![Рисунок 1](https://github.com/tereshkovyv/CitySO/blob/main/README.images/1.png)
+
+![Рисунок 2](https://github.com/tereshkovyv/CitySO/blob/main/README.images/2.png)
+
+![Рисунок 3](https://github.com/tereshkovyv/CitySO/blob/main/README.images/3.png)
+
+![Рисунок 4](https://github.com/tereshkovyv/CitySO/blob/main/README.images/4.png)
+
+![Рисунок 5](https://github.com/tereshkovyv/CitySO/blob/main/README.images/5.png)
+
+
 ## Основная функциональность
 
 - Подключение к VK с помощью токена группы.
