@@ -310,7 +310,7 @@ public partial class MainWindowViewModel : ObservableObject
 
         var hyperlink1 = new Hyperlink
         {
-            NavigateUri = new Uri("https://github.com/your-repo/CitySO"),
+            NavigateUri = new Uri("https://github.com/tereshkovyv/CitySO"),
             Inlines = { new Run("Исходный код на GitHub") }
         };
         hyperlink1.RequestNavigate += (s, e) =>
